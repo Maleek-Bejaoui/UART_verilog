@@ -11,6 +11,7 @@ module tt_um_top (
     input  wire [7:0] uio_in,   // IOs: Input path
     output wire [7:0] uio_out,  // IOs: Output path
     output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
+    
     input  wire       ena,      // always 1 when the design is powered, so you can ignore it
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
@@ -20,15 +21,28 @@ module tt_um_top (
 //  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
   assign uio_out = 0;
   assign uio_oe  = 0;
+    
 
   // List all unused inputs to prevent warnings
 //  wire _unused = &{ena, clk, rst_n, 1'b0};
-  wire _unused = &{ena, 1'b0};
+//  wire _unused = &{ena, 1'b0};
+    wire [15:0] s_ram_out,s_ram_in;
+    wire [5:0] s_ram_adr;
+  boot_loader m_boot_loader (
+      .rst  (!rst_n),    // Clock input
+      .clk  (clk), // Reset input
+      .ce (ena),  // 8-bit counter output
 
-  counter m_counter (
-    .clk  (clk),    // Clock input
-    .rst  (!rst_n), // Reset input
-    .cmpt (uo_out)  // 8-bit counter output
+      .rx(ui_in(0)),
+      .tx(uo_out(0)),
+      .boot(uo_out(1)),
+      .scan_memory(ui_in(1)),
+      .ram_out(s_ram_out),
+      .ram_rw(uo_out(2)),
+      .ram_enable(uo_out(3)),
+      .ram_adr(s_ram_adr),
+      .ram_in  (s_ram_in)
+     
   );
 
 endmodule
