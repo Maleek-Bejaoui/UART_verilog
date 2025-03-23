@@ -41,7 +41,7 @@ module tt_um_top (
       .ram_rw(uo_out[2]),
       .ram_enable(uo_out[3]),
       .ram_adr(s_ram_adr),
-      .ram_in  (unused_signal)
+      .ram_in  ()
      
   );
 
