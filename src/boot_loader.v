@@ -15,7 +15,9 @@ module boot_loader (
     output reg [15:0] ram_in  
 );
 
-// Internal signals
+
+/* verilator lint_off PINMISSING */
+    
 wire [7:0] rx_byte, tx_byte;
 reg rx_data_valid, tx_data_valid, tx_word_valid, rx_word_valid;
 reg [1:0] byte_count;
@@ -24,15 +26,9 @@ reg enable_rx_byte_counter, init_byte_counter;
 reg [14:0] tx_cycle_count;
 reg init_tx_cycle_count, tx_cycle_count_over;
 
-// State machine states
-/*typedef enum logic [3:0] {
-    INIT, WAIT_RX_BYTE, INCR_RX_BYTE_COUNTER, WRITE_RX_BYTE,
-    WAIT_SCAN_MEM, READ_TX_BYTE, INCR_TX_BYTE_COUNTER,
-    ENABLE_TX, WAIT_8K_CYCLE, OVER
-} state_t;
 
-state_t current_state, future_state; */
-// Define state encoding
+
+
 
 parameter [3:0] 
     INIT = 4'b0000,
@@ -46,32 +42,31 @@ parameter [3:0]
     WAIT_8K_CYCLE = 4'b1000,
     OVER = 4'b1001;
 
-// Declare state registers
+
 reg [3:0] current_state, future_state;
 
 
 
 
-// Instantiating UART receiver
+
 UART_recv uart_recv_inst (
     .clk(clk), .reset(rst), .rx(rx), .dat(rx_byte), .dat_en(rx_data_valid)
 );
 
-// Instantiating byte to word converter
 byte_2_word b2w_inst (
     .rst(rst), .clk(clk), .ce(ce),
     .byte_dv(rx_data_valid), .byteee(rx_byte),
     .word_dv(rx_word_valid), .word(ram_in)
 );
 
-// Instantiating word to byte converter
+
 word_2_byte w2b_inst (
     .rst(rst), .clk(clk), .ce(ce),
     .word_dv(tx_data_valid), .word(ram_out),
     .byte_dv(tx_word_valid), .byteee(tx_byte)
 );
 
-// Instantiating UART transmitter
+
 UART_fifoed_send/* #(
     .fifo_size(4), .fifo_almost(2), .drop_oldest_when_full(0),
     .asynch_fifo_full(1), .baudrate(115200), .clock_frequency(100000000)
@@ -81,7 +76,7 @@ UART_fifoed_send/* #(
     .TX(tx)
 );
 
-// RX Byte Counter Process
+
 always @(posedge clk or posedge rst) begin
     if (rst) 
         rx_byte_count <= 0;
@@ -93,7 +88,7 @@ always @(posedge clk or posedge rst) begin
     end
 end
 
-// TX Cycle Counter Process
+
 always @(posedge clk or posedge rst) begin
     if (rst) begin
         tx_cycle_count <= 0;
@@ -112,7 +107,7 @@ always @(posedge clk or posedge rst) begin
     end
 end
 
-// FSM State Register
+
 always @(posedge clk or posedge rst) begin
     if (rst)
         current_state <= INIT;
@@ -120,7 +115,7 @@ always @(posedge clk or posedge rst) begin
         current_state <= future_state;
 end
 
-// FSM Next State Logic
+
 always @* begin
     case (current_state)
         INIT: future_state = WAIT_RX_BYTE;
@@ -136,7 +131,7 @@ always @* begin
     endcase
 end
 
-// FSM Output Logic
+
 always @* begin
     case (current_state)
         INIT: begin
@@ -158,4 +153,5 @@ always @* begin
     endcase
 end
 
+    /* verilator lint_off PINMISSING */
 endmodule
