@@ -11,7 +11,6 @@ module boot_loader (
     input wire [15:0] ram_out,  
     output reg ram_rw,  
     output reg ram_enable,  
-    output reg [5:0] ram_adr,  
     output reg [15:0] ram_in  
 );
 
