@@ -22,7 +22,6 @@ module tt_um_top (
     assign uio_out = 0;
     assign uio_oe  = 0;
     assign uo_out[7:4]  = 4'b0000;
-    assign uio_in  = 0;
 
     
 
