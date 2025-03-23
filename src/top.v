@@ -24,7 +24,7 @@ module tt_um_top (
     
 
   // List all unused inputs to prevent warnings
-//  wire _unused = &{ena, clk, rst_n, 1'b0};
+    wire _unused = &{ui_in[7:2], 1'b00000};
     wire _unused = &{uio_in, 1'b00000000};
    /* verilator lint_off PINCONNECTEMPTY */
   boot_loader m_boot_loader (
