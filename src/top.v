@@ -26,8 +26,7 @@ module tt_um_top (
   // List all unused inputs to prevent warnings
 //  wire _unused = &{ena, clk, rst_n, 1'b0};
 //  wire _unused = &{ena, 1'b0};
-    wire [15:0] s_ram_out,s_ram_in;
-    wire [5:0] s_ram_adr;
+   /* verilator lint_off PINCONNECTEMPTY */
   boot_loader m_boot_loader (
       .rst  (!rst_n),    // Clock input
       .clk  (clk), // Reset input
@@ -37,12 +36,11 @@ module tt_um_top (
       .tx(uo_out[0]),
       .boot(uo_out[1]),
       .scan_memory(ui_in[1]),
-      .ram_out(s_ram_out),
+      .ram_out(),
       .ram_rw(uo_out[2]),
       .ram_enable(uo_out[3]),
-      .ram_adr(s_ram_adr),
+      .ram_adr(),
       .ram_in  ()
-     
   );
-
+/* verilator lint_on PINCONNECTEMPTY */
 endmodule
