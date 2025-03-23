@@ -27,7 +27,9 @@ module tt_um_top (
 
   // List all unused inputs to prevent warnings
     wire _unused = &{ui_in[7:2], 6'b000000};
-    wire _unused = &{uio_in,     8'b00000000};
+   // wire _unused = &{uio_in,     8'b00000000};
+
+    
    /* verilator lint_off PINCONNECTEMPTY */
   boot_loader m_boot_loader (
       .rst  (!rst_n),    // Clock input
