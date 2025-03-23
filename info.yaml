@@ -40,7 +40,7 @@ pinout:
   uo[0]: "uo_out[0]"
   uo[1]: "uo_out[1]"
   uo[2]: "uo_out[2]"
-  uo[3]: "o_out[3]"
+  uo[3]: "uo_out[3]"
   uo[4]: ""
   uo[5]: ""
   uo[6]: ""
