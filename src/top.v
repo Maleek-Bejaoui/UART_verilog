@@ -33,13 +33,13 @@ module tt_um_top (
       .clk  (clk), // Reset input
       .ce (ena),  // 8-bit counter output
 
-      .rx(ui_in(0)),
-      .tx(uo_out(0)),
-      .boot(uo_out(1)),
-      .scan_memory(ui_in(1)),
+      .rx(ui_in[0]),
+      .tx(uo_out[0]),
+      .boot(uo_out[1]),
+      .scan_memory(ui_in[1]),
       .ram_out(s_ram_out),
-      .ram_rw(uo_out(2)),
-      .ram_enable(uo_out(3)),
+      .ram_rw(uo_out[2]),
+      .ram_enable(uo_out[3]),
       .ram_adr(s_ram_adr),
       .ram_in  (s_ram_in)
      
