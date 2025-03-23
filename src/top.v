@@ -28,6 +28,8 @@ module tt_um_top (
 
   // List all unused inputs to prevent warnings
     wire _unused = &{ui_in[7:2], 6'b000000};
+    wire _unused1 = &{uio_in, 8'b0};
+    
 
     
    /* verilator lint_off PINCONNECTEMPTY */
