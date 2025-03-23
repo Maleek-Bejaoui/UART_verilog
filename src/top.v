@@ -43,7 +43,6 @@ module tt_um_top (
       .ram_out(),
       .ram_rw(uo_out[2]),
       .ram_enable(uo_out[3]),
-      .ram_adr(),
       .ram_in  ()
   );
 /* verilator lint_on PINCONNECTEMPTY */
