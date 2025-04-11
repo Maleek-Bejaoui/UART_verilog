@@ -2,7 +2,6 @@
 module word_2_byte (
     input wire rst,
     input wire clk,
-    input wire ce,
     input wire word_dv,
     input wire [15:0] word,
     output wire byte_dv,
