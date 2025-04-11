@@ -28,7 +28,7 @@ module uart_fifoed_send (
                        (dat_en && nbbits < 12 && n_elements == 4095);
 
 
-    always @(posedge clk_100MHz) begin
+    always @(posedge clk_100MHz or posedge reset) begin
         if (reset) begin
             cnt <= 0;
         end else if (nbbits >= 12 || cnt == 0) begin
@@ -41,7 +41,7 @@ module uart_fifoed_send (
     
 
     // UART shift register handling
-    always @(posedge clk_100MHz) begin
+    always @(posedge clk_100MHz or posedge reset) begin
         if (reset) begin
             shift <= 9'b111111111;
             nbbits <= 12;
@@ -64,7 +64,7 @@ module uart_fifoed_send (
 
 
     // FIFO read pointer logic
-    always @(posedge clk_100MHz) begin
+    always @(posedge clk_100MHz or posedge reset) begin
         if (reset) begin
             read_index <= 0;
         end else if ((n_elements > 0) && (nbbits >= 12)) begin
@@ -76,7 +76,7 @@ module uart_fifoed_send (
 
 
     // FIFO element count management
-    always @(posedge clk_100MHz) begin
+    always @(posedge clk_100MHz or posedge reset) begin
         if (reset) begin
             n_elements <= 0;
         end else if (dat_en) begin
@@ -91,7 +91,7 @@ module uart_fifoed_send (
     end
 
     // FIFO write pointer + writing data
-always @(posedge clk_100MHz) begin
+    always @(posedge clk_100MHz or posedge reset) begin
     if (reset) begin
         write_index <= 0;
     end 
