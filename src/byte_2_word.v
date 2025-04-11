@@ -4,7 +4,7 @@ module byte_2_word (
     input wire clk,            
     input wire ce,             
     input wire byte_dv,        
-    input wire [7:0] byte,     
+    input wire [7:0] byteee,     
     output reg word_dv,        
     output reg [15:0] word     
 );
@@ -20,7 +20,7 @@ module byte_2_word (
             byte_reg2 <= 8'b0;
         end else if (ce) begin
             if (byte_dv) begin
-                byte_reg <= byte;
+                byte_reg <= byteee;
                 byte_reg2 <= byte_reg;
             end
         end
