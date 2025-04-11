@@ -5,7 +5,7 @@ module word_2_byte (
     input wire word_dv,
     input wire [15:0] word,
     output wire byte_dv,
-    output wire [7:0] byte
+    output wire [7:0] byteee
 );
 
     reg word_dv_dly, word_dv_dly2;
@@ -40,7 +40,7 @@ module word_2_byte (
     end
    
       assign byte_dv = word_dv_dly | word_dv_dly2;
-      assign byte = s_byte;
+      assign byteee = s_byte;
       
 
 
