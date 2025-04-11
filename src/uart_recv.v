@@ -1,402 +1,274 @@
-module UART_recv
-  (input  clk,
-   input  reset,
-   input  rx,
-   output [7:0] dat,
-   output dat_en);
-  reg [2:0] state;
-  reg [3:0] nbbits;
-  wire [9:0] cnt;
-  reg rxi;
-  wire ref_bit;
-  wire [7:0] shift;
-  wire n13_o;
-  wire [2:0] n15_o;
-  wire n17_o;
-  wire [31:0] n18_o;
-  wire n20_o;
-  wire [2:0] n22_o;
-  wire [2:0] n24_o;
-  wire n26_o;
-  wire [31:0] n27_o;
-  wire n29_o;
-  wire [2:0] n31_o;
-  wire n33_o;
-  wire [31:0] n34_o;
-  wire n36_o;
-  wire [2:0] n38_o;
-  wire n40_o;
-  wire [31:0] n41_o;
-  wire n43_o;
-  wire [2:0] n46_o;
-  wire [2:0] n48_o;
-  wire n50_o;
-  wire n51_o;
-  wire [31:0] n52_o;
-  wire n54_o;
-  wire [2:0] n56_o;
-  wire [2:0] n58_o;
-  wire n60_o;
-  wire [31:0] n61_o;
-  wire n63_o;
-  wire [2:0] n65_o;
-  wire n67_o;
-  wire [6:0] n68_o;
-  reg [2:0] n70_o;
-  wire [2:0] n72_o;
-  wire n79_o;
-  wire [31:0] n80_o;
-  wire n82_o;
-  wire [31:0] n83_o;
-  wire [31:0] n85_o;
-  wire [9:0] n86_o;
-  wire [9:0] n88_o;
-  wire n90_o;
-  wire [31:0] n91_o;
-  wire n93_o;
-  wire [31:0] n94_o;
-  wire [31:0] n96_o;
-  wire [9:0] n97_o;
-  wire [9:0] n99_o;
-  wire n101_o;
-  wire n102_o;
-  wire [31:0] n103_o;
-  wire [31:0] n105_o;
-  wire [9:0] n106_o;
-  wire [9:0] n108_o;
-  wire n110_o;
-  wire [31:0] n111_o;
-  wire n113_o;
-  wire n114_o;
-  wire [9:0] n117_o;
-  wire [9:0] n119_o;
-  wire n121_o;
-  wire [31:0] n122_o;
-  wire [31:0] n124_o;
-  wire [9:0] n125_o;
-  wire n127_o;
-  wire n128_o;
-  wire [31:0] n129_o;
-  wire [31:0] n131_o;
-  wire [9:0] n132_o;
-  wire [9:0] n134_o;
-  wire n136_o;
-  wire [6:0] n137_o;
-  reg [9:0] n140_o;
-  wire [9:0] n142_o;
-  wire n149_o;
-  wire n151_o;
-  wire n152_o;
-  wire n160_o;
-  wire [31:0] n161_o;
-  wire n163_o;
-  wire n164_o;
-  wire [31:0] n165_o;
-  wire n167_o;
-  wire n168_o;
-  wire [6:0] n169_o;
-  wire [7:0] n170_o;
-  wire n178_o;
-  wire n180_o;
-  wire [31:0] n181_o;
-  wire [31:0] n183_o;
-  wire [3:0] n184_o;
-  wire [3:0] n185_o;
-  wire [3:0] n187_o;
-  wire n194_o;
-  wire [31:0] n195_o;
-  wire n197_o;
-  wire n198_o;
-  wire [7:0] n199_o;
-  wire n202_o;
-  wire [7:0] n203_o;
-  wire n205_o;
-  reg [2:0] n209_q;
-  reg [3:0] n210_q;
-  reg [9:0] n211_q;
-  reg n212_q;
-  wire n213_o;
-  reg n214_q;
-  wire [7:0] n215_o;
-  reg [7:0] n216_q;
-  reg [7:0] n217_q;
-  reg n218_q;
-  assign dat = n217_q;
-  assign dat_en = n218_q;
-  /* uart_recv.vhd:47:11  */
-  always @*
-    state = n209_q; // (isignal)
-  initial
-    state = 3'b000;
-  /* uart_recv.vhd:48:11  */
-  always @*
-    nbbits = n210_q; // (isignal)
-  initial
-    nbbits = 4'b0000;
-  /* uart_recv.vhd:49:11  */
-  assign cnt = n211_q; // (signal)
-  /* uart_recv.vhd:50:11  */
-  always @*
-    rxi = n212_q; // (isignal)
-  initial
-    rxi = 1'b1;
-  /* uart_recv.vhd:51:11  */
-  assign ref_bit = n214_q; // (signal)
-  /* uart_recv.vhd:52:11  */
-  assign shift = n216_q; // (signal)
-  /* uart_recv.vhd:77:36  */
-  assign n13_o = ~rxi;
-  /* uart_recv.vhd:77:29  */
-  assign n15_o = n13_o ? 3'b001 : state;
-  /* uart_recv.vhd:77:16  */
-  assign n17_o = state == 3'b000;
-  /* uart_recv.vhd:82:20  */
-  assign n18_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:82:20  */
-  assign n20_o = n18_o == 32'b00000000000000000000000000000000;
-  /* uart_recv.vhd:82:10  */
-  assign n22_o = n20_o ? 3'b010 : state;
-  /* uart_recv.vhd:80:35  */
-  assign n24_o = rxi ? 3'b000 : n22_o;
-  /* uart_recv.vhd:80:13  */
-  assign n26_o = state == 3'b001;
-  /* uart_recv.vhd:85:39  */
-  assign n27_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:85:39  */
-  assign n29_o = n27_o == 32'b00000000000000000000000000000000;
-  /* uart_recv.vhd:85:32  */
-  assign n31_o = n29_o ? 3'b011 : state;
-  /* uart_recv.vhd:85:10  */
-  assign n33_o = state == 3'b010;
-  /* uart_recv.vhd:88:33  */
-  assign n34_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:88:33  */
-  assign n36_o = n34_o == 32'b00000000000000000000000000000000;
-  /* uart_recv.vhd:88:26  */
-  assign n38_o = n36_o ? 3'b100 : state;
-  /* uart_recv.vhd:88:7  */
-  assign n40_o = state == 3'b011;
-  /* uart_recv.vhd:91:35  */
-  assign n41_o = {28'b0, nbbits};  //  uext
-  /* uart_recv.vhd:91:35  */
-  assign n43_o = $signed(n41_o) < $signed(32'b00000000000000000000000000001000);
-  /* uart_recv.vhd:93:1  */
-  assign n46_o = ref_bit ? 3'b101 : 3'b110;
-  /* uart_recv.vhd:91:25  */
-  assign n48_o = n43_o ? 3'b010 : n46_o;
-  /* uart_recv.vhd:91:4  */
-  assign n50_o = state == 3'b100;
-  /* uart_recv.vhd:98:30  */
-  assign n51_o = ~rxi;
-  /* uart_recv.vhd:100:11  */
-  assign n52_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:100:11  */
-  assign n54_o = n52_o == 32'b00000000000000000000000000000000;
-  /* uart_recv.vhd:100:1  */
-  assign n56_o = n54_o ? 3'b000 : state;
-  /* uart_recv.vhd:98:23  */
-  assign n58_o = n51_o ? 3'b110 : n56_o;
-  /* uart_recv.vhd:98:1  */
-  assign n60_o = state == 3'b101;
-  /* uart_recv.vhd:103:33  */
-  assign n61_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:103:33  */
-  assign n63_o = n61_o == 32'b00000000000000000000000000000000;
-  /* uart_recv.vhd:103:26  */
-  assign n65_o = n63_o ? 3'b000 : state;
-  /* uart_recv.vhd:103:1  */
-  assign n67_o = state == 3'b110;
-  assign n68_o = {n67_o, n60_o, n50_o, n40_o, n33_o, n26_o, n17_o};
-  /* uart_recv.vhd:76:13  */
-  always @*
-    case (n68_o)
-      7'b1000000: n70_o = n65_o;
-      7'b0100000: n70_o = n58_o;
-      7'b0010000: n70_o = n48_o;
-      7'b0001000: n70_o = n38_o;
-      7'b0000100: n70_o = n31_o;
-      7'b0000010: n70_o = n24_o;
-      7'b0000001: n70_o = n15_o;
-      default: n70_o = 3'bX;
-    endcase
-  /* uart_recv.vhd:73:10  */
-  assign n72_o = reset ? 3'b000 : n70_o;
-  /* uart_recv.vhd:119:13  */
-  assign n79_o = state == 3'b000;
-  /* uart_recv.vhd:120:42  */
-  assign n80_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:120:42  */
-  assign n82_o = n80_o == 32'b00000000000000000000000000000000;
-  /* uart_recv.vhd:123:27  */
-  assign n83_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:123:27  */
-  assign n85_o = n83_o - 32'b00000000000000000000000000000001;
-  /* uart_recv.vhd:123:23  */
-  assign n86_o = n85_o[9:0];  // trunc
-  /* uart_recv.vhd:120:35  */
-  assign n88_o = n82_o ? 10'b1010000011 : n86_o;
-  /* uart_recv.vhd:120:13  */
-  assign n90_o = state == 3'b001;
-  /* uart_recv.vhd:125:39  */
-  assign n91_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:125:39  */
-  assign n93_o = n91_o == 32'b00000000000000000000000000000000;
-  /* uart_recv.vhd:128:21  */
-  assign n94_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:128:21  */
-  assign n96_o = n94_o - 32'b00000000000000000000000000000001;
-  /* uart_recv.vhd:128:17  */
-  assign n97_o = n96_o[9:0];  // trunc
-  /* uart_recv.vhd:125:32  */
-  assign n99_o = n93_o ? 10'b0011011000 : n97_o;
-  /* uart_recv.vhd:125:10  */
-  assign n101_o = state == 3'b010;
-  /* uart_recv.vhd:130:37  */
-  assign n102_o = ref_bit != rxi;
-  /* uart_recv.vhd:133:18  */
-  assign n103_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:133:18  */
-  assign n105_o = n103_o - 32'b00000000000000000000000000000001;
-  /* uart_recv.vhd:133:14  */
-  assign n106_o = n105_o[9:0];  // trunc
-  /* uart_recv.vhd:130:26  */
-  assign n108_o = n102_o ? 10'b0011011000 : n106_o;
-  /* uart_recv.vhd:130:7  */
-  assign n110_o = state == 3'b011;
-  /* uart_recv.vhd:135:35  */
-  assign n111_o = {28'b0, nbbits};  //  uext
-  /* uart_recv.vhd:135:35  */
-  assign n113_o = $signed(n111_o) < $signed(32'b00000000000000000000000000001000);
-  /* uart_recv.vhd:137:15  */
-  assign n114_o = ~ref_bit;
-  /* uart_recv.vhd:137:1  */
-  assign n117_o = n114_o ? 10'b1101100011 : 10'b0110110001;
-  /* uart_recv.vhd:135:25  */
-  assign n119_o = n113_o ? 10'b1010000011 : n117_o;
-  /* uart_recv.vhd:135:4  */
-  assign n121_o = state == 3'b100;
-  /* uart_recv.vhd:142:34  */
-  assign n122_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:142:34  */
-  assign n124_o = n122_o - 32'b00000000000000000000000000000001;
-  /* uart_recv.vhd:142:30  */
-  assign n125_o = n124_o[9:0];  // trunc
-  /* uart_recv.vhd:142:1  */
-  assign n127_o = state == 3'b101;
-  /* uart_recv.vhd:143:33  */
-  assign n128_o = ~rxi;
-  /* uart_recv.vhd:146:12  */
-  assign n129_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:146:12  */
-  assign n131_o = n129_o - 32'b00000000000000000000000000000001;
-  /* uart_recv.vhd:146:8  */
-  assign n132_o = n131_o[9:0];  // trunc
-  /* uart_recv.vhd:143:26  */
-  assign n134_o = n128_o ? 10'b1101100011 : n132_o;
-  /* uart_recv.vhd:143:1  */
-  assign n136_o = state == 3'b110;
-  assign n137_o = {n136_o, n127_o, n121_o, n110_o, n101_o, n90_o, n79_o};
-  /* uart_recv.vhd:118:10  */
-  always @*
-    case (n137_o)
-      7'b1000000: n140_o = n134_o;
-      7'b0100000: n140_o = n125_o;
-      7'b0010000: n140_o = n119_o;
-      7'b0001000: n140_o = n108_o;
-      7'b0000100: n140_o = n99_o;
-      7'b0000010: n140_o = n88_o;
-      7'b0000001: n140_o = 10'b0011011000;
-      default: n140_o = 10'bX;
-    endcase
-  /* uart_recv.vhd:115:7  */
-  assign n142_o = reset ? 10'b0011011000 : n140_o;
-  /* uart_recv.vhd:160:16  */
-  assign n149_o = state == 3'b010;
-  /* uart_recv.vhd:160:41  */
-  assign n151_o = state == 3'b011;
-  /* uart_recv.vhd:160:32  */
-  assign n152_o = n149_o | n151_o;
-  /* uart_recv.vhd:169:16  */
-  assign n160_o = state == 3'b011;
-  /* uart_recv.vhd:169:37  */
-  assign n161_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:169:37  */
-  assign n163_o = n161_o == 32'b00000000000000000000000000000000;
-  /* uart_recv.vhd:169:29  */
-  assign n164_o = n163_o & n160_o;
-  /* uart_recv.vhd:169:52  */
-  assign n165_o = {28'b0, nbbits};  //  uext
-  /* uart_recv.vhd:169:52  */
-  assign n167_o = $signed(n165_o) < $signed(32'b00000000000000000000000000001000);
-  /* uart_recv.vhd:169:41  */
-  assign n168_o = n167_o & n164_o;
-  /* uart_recv.vhd:170:35  */
-  assign n169_o = shift[7:1];
-  /* uart_recv.vhd:170:27  */
-  assign n170_o = {ref_bit, n169_o};
-  /* uart_recv.vhd:178:16  */
-  assign n178_o = state == 3'b000;
-  /* uart_recv.vhd:180:19  */
-  assign n180_o = state == 3'b100;
-  /* uart_recv.vhd:181:27  */
-  assign n181_o = {28'b0, nbbits};  //  uext
-  /* uart_recv.vhd:181:27  */
-  assign n183_o = n181_o + 32'b00000000000000000000000000000001;
-  /* uart_recv.vhd:181:20  */
-  assign n184_o = n183_o[3:0];  // trunc
-  /* uart_recv.vhd:180:7  */
-  assign n185_o = n180_o ? n184_o : nbbits;
-  /* uart_recv.vhd:178:7  */
-  assign n187_o = n178_o ? 4'b0000 : n185_o;
-  /* uart_recv.vhd:192:19  */
-  assign n194_o = state == 3'b101;
-  /* uart_recv.vhd:192:43  */
-  assign n195_o = {22'b0, cnt};  //  uext
-  /* uart_recv.vhd:192:43  */
-  assign n197_o = n195_o == 32'b00000000000000000000000000000000;
-  /* uart_recv.vhd:192:35  */
-  assign n198_o = n197_o & n194_o;
-  /* uart_recv.vhd:192:7  */
-  assign n199_o = n198_o ? shift : n217_q;
-  /* uart_recv.vhd:192:7  */
-  assign n202_o = n198_o ? 1'b1 : 1'b0;
-  /* uart_recv.vhd:190:7  */
-  assign n203_o = reset ? n217_q : n199_o;
-  /* uart_recv.vhd:190:7  */
-  assign n205_o = reset ? 1'b0 : n202_o;
-  /* uart_recv.vhd:72:7  */
-  always @(posedge clk)
-    n209_q <= n72_o;
-  initial
-    n209_q = 3'b000;
-  /* uart_recv.vhd:177:4  */
-  always @(posedge clk)
-    n210_q <= n187_o;
-  initial
-    n210_q = 4'b0000;
-  /* uart_recv.vhd:114:4  */
-  always @(posedge clk)
-    n211_q <= n142_o;
-  /* uart_recv.vhd:64:7  */
-  always @(posedge clk)
-    n212_q <= rx;
-  initial
-    n212_q = 1'b1;
-  /* uart_recv.vhd:159:4  */
-  assign n213_o = n152_o ? rxi : ref_bit;
-  /* uart_recv.vhd:159:4  */
-  always @(posedge clk)
-    n214_q <= n213_o;
-  /* uart_recv.vhd:168:4  */
-  assign n215_o = n168_o ? n170_o : shift;
-  /* uart_recv.vhd:168:4  */
-  always @(posedge clk)
-    n216_q <= n215_o;
-  /* uart_recv.vhd:189:4  */
-  always @(posedge clk)
-    n217_q <= n203_o;
-  /* uart_recv.vhd:189:4  */
-  always @(posedge clk)
-    n218_q <= n205_o;
-endmodule
 
+module UART_recv (
+    input  wire       clk,
+    input  wire       reset,
+    input  wire       rx,
+    output reg  [7:0] dat,
+    output reg        dat_en
+);
+
+    //---------------------------------------------
+    // Définition des états (traduction de t_fsm)
+    //---------------------------------------------
+    
+    localparam [2:0]
+        IDLE            = 3'd0,
+        ZERO_AS_INPUT   = 3'd1,
+        WAIT_NEXT_BIT   = 3'd2,
+        BIT_SAMPLE      = 3'd3,
+        BIT_RECEIVED    = 3'd4,
+        WAIT_STOP_BIT   = 3'd5,
+        LAST_BIT_IS_ZERO= 3'd6;
+    
+    //---------------------------------------------
+    // Constantes de timing
+    // (pour un horloge ~100 MHz et un baud rate 115200)
+    //---------------------------------------------
+    
+    localparam [9:0] QUARTER        = 10'd216;  // ~1/4 de la période bit
+    localparam [9:0] HALF           = 10'd433;  // ~1/2
+    localparam [9:0] THREE_QUARTERS = 10'd643;  // ~3/4
+    localparam [9:0] FULL           = 10'd867;  // ~1 période entière
+    
+    //---------------------------------------------
+    // Registres internes
+    //---------------------------------------------
+    reg [2:0] current_state, next_state; // registre d'état
+    reg [3:0] nbbits;                    // compte le nombre de bits reçus (0..8)
+    reg [9:0] cnt;                       // compteur pour les timings
+    reg       rxi;                       // échantillonnage du signal rx
+    reg       ref_bit;                   // bit de référence utilisé pendant BIT_SAMPLE
+    reg [7:0] shift;                     // registre de décalage pour construire l'octet reçu
+    
+    //---------------------------------------------
+    // 1) Échantillonnage de l'entrée rx
+    //    (comme dans le code VHDL, pour éviter le glitch)
+    //---------------------------------------------
+    always @(posedge clk) begin
+        rxi <= rx;
+    end
+    
+    //---------------------------------------------
+    // 2) Registre d'état (synchronisé sur clk + reset)
+    //---------------------------------------------
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            current_state <= IDLE;
+        end else begin
+            current_state <= next_state;
+        end
+    end
+
+    //---------------------------------------------
+    // 3) Logique combinatoire de changement d’état
+    //    (traduction directe des conditions du code VHDL)
+    //---------------------------------------------
+    always @(*) begin
+        // Par défaut, on reste dans le même état
+        next_state = current_state;
+        
+        case (current_state)
+            IDLE: begin
+                // VHDL : if rxi='0' then state <= zero_as_input;
+                if (rxi == 1'b0)
+                    next_state = ZERO_AS_INPUT;
+                // sinon on reste en IDLE
+            end
+            
+            ZERO_AS_INPUT: begin
+                // if rxi='1' then state <= idle; elsif cnt=0 then state <= wait_next_bit;
+                if (rxi == 1'b1)
+                    next_state = IDLE;
+                else if (cnt == 0)
+                    next_state = WAIT_NEXT_BIT;
+            end
+            
+            WAIT_NEXT_BIT: begin
+                // if cnt=0 then state <= bit_sample;
+                if (cnt == 0)
+                    next_state = BIT_SAMPLE;
+            end
+            
+            BIT_SAMPLE: begin
+                // if cnt=0 then state <= bit_received;
+                if (cnt == 0)
+                    next_state = BIT_RECEIVED;
+            end
+            
+            BIT_RECEIVED: begin
+                // if nbbits<8 then wait_next_bit
+                // else if ref_bit=1 => wait_stop_bit
+                // else => last_bit_is_zero
+                if (nbbits < 8)
+                    next_state = WAIT_NEXT_BIT;
+                else if (ref_bit == 1'b1)
+                    next_state = WAIT_STOP_BIT;
+                else
+                    next_state = LAST_BIT_IS_ZERO;
+            end
+            
+            WAIT_STOP_BIT: begin
+                // if rxi=0 => last_bit_is_zero
+                // elsif cnt=0 => idle
+                if (rxi == 1'b0)
+                    next_state = LAST_BIT_IS_ZERO;
+                else if (cnt == 0)
+                    next_state = IDLE;
+            end
+            
+            LAST_BIT_IS_ZERO: begin
+                // if cnt=0 => idle
+                if (cnt == 0)
+                    next_state = IDLE;
+            end
+            
+            default: begin
+                next_state = IDLE; // Sécurité
+            end
+        endcase
+    end
+
+    //---------------------------------------------
+    // 4) Logique séquentielle : compteur, registre
+    //    de décalage, nbbits, et signaux de sortie
+    //---------------------------------------------
+    
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            // Reset asynchrone
+            cnt     <= QUARTER;
+            nbbits  <= 4'd0;
+            shift   <= 8'd0;
+            dat     <= 8'd0;
+            dat_en  <= 1'b0;
+            ref_bit <= 1'b1;
+        end else begin
+            // Par défaut, dat_en = 0 à chaque cycle
+            dat_en <= 1'b0;
+            
+            case (current_state)
+                //---------------------------------
+                // IDLE
+                //---------------------------------
+                IDLE: begin
+                    // cnt <= quarter; nbbits=0
+                    cnt    <= QUARTER;
+                    nbbits <= 4'd0;
+                end
+                
+                //---------------------------------
+                // ZERO_AS_INPUT
+                //---------------------------------
+                ZERO_AS_INPUT: begin
+                    // if (rxi=1) => next=IDLE
+                    // else if cnt=0 => WAIT_NEXT_BIT => cnt=three_quarters
+                    // else cnt=cnt-1
+                    if (rxi == 1'b0) begin
+                        if (cnt == 0)
+                            cnt <= THREE_QUARTERS;
+                        else
+                            cnt <= cnt - 1;
+                    end
+                    // si (rxi==1) => on va en IDLE au cycle suivant (cf. next_state), 
+                    //   pas de modif de cnt ici (on le réinitialisera en IDLE)
+                end
+                
+                //---------------------------------
+                // WAIT_NEXT_BIT
+                //---------------------------------
+                WAIT_NEXT_BIT: begin
+                    // if cnt=0 => BIT_SAMPLE => cnt=quarter
+                    // else cnt=cnt-1
+                    if (cnt == 0)
+                        cnt <= QUARTER;
+                    else
+                        cnt <= cnt - 1;
+                end
+                
+                //---------------------------------
+                // BIT_SAMPLE
+                //---------------------------------
+                BIT_SAMPLE: begin
+                    // if ref_bit != rxi => cnt=quarter
+                    // else cnt=cnt-1
+                    if (ref_bit != rxi)
+                        cnt <= QUARTER;
+                    else
+                        cnt <= cnt - 1;
+                end
+                
+                //---------------------------------
+                // BIT_RECEIVED
+                //---------------------------------
+                BIT_RECEIVED: begin
+                    // if nbbits<8 => cnt=three_quarters
+                    // else if ref_bit=0 => cnt=full
+                    // else => cnt=half
+                    // => nbbits <= nbbits+1
+                    if (nbbits < 8) begin
+                        cnt <= THREE_QUARTERS;
+                    end else if (ref_bit == 1'b0) begin
+                        cnt <= FULL;
+                    end else begin
+                        cnt <= HALF;
+                    end
+                    nbbits <= nbbits + 1;
+                end
+                
+                //---------------------------------
+                // WAIT_STOP_BIT
+                //---------------------------------
+                WAIT_STOP_BIT: begin
+                    // cnt <= cnt-1
+                    // si cnt=0 => next_state=IDLE => on déclenche dat_en et on sort dat=shift
+                    cnt <= cnt - 1;
+                    
+                    // En VHDL : "ELSIF state = wait_stop_bit AND cnt=0 THEN dat_en <= '1'; dat <= shift;"
+                    // On anticipe le cycle où cnt va passer à 0
+                    if (cnt == 1) begin
+                        dat_en <= 1'b1;
+                        dat    <= shift;
+                    end
+                end
+                
+                //---------------------------------
+                // LAST_BIT_IS_ZERO
+                //---------------------------------
+                LAST_BIT_IS_ZERO: begin
+                    // if rxi=0 => cnt=full
+                    // else cnt=cnt-1
+                    // if cnt=0 => idle
+                    if (rxi == 1'b0) begin
+                        cnt <= FULL;
+                    end else begin
+                        cnt <= cnt - 1;
+                    end
+                end
+                
+                default: begin
+                    // Sécurité
+                end
+            endcase
+            
+            // Mise à jour de ref_bit
+            // (Comme en VHDL : si on est dans WAIT_NEXT_BIT ou BIT_SAMPLE, on capture rxi)
+            if ((current_state == WAIT_NEXT_BIT) || (current_state == BIT_SAMPLE)) begin
+                ref_bit <= rxi;
+            end
+            
+            // Chargement du bit reçu dans le shift
+            // VHDL : 
+            //   IF state=bit_sample AND cnt=0 AND nbbits<8 THEN
+            //       shift <= ref_bit & shift(7 DOWNTO 1);
+            //   END IF;
+            if ((current_state == BIT_SAMPLE) && (cnt == 0) && (nbbits < 8)) begin
+                // Décalage à gauche : le bit ref_bit devient le LSB ou MSB ?
+                // Dans le code VHDL : shift <= ref_bit & shift(7 DOWNTO 1);
+                // Cela place `ref_bit` en bit [7], et décale shift[7..1] vers shift[6..0].
+                // => On peut écrire en Verilog :
+                shift <= {ref_bit, shift[7:1]};
+            end
+        end
+    end
+
+endmodule
