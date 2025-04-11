@@ -44,6 +44,7 @@ module boot_loader (
         .dat_en(rx_data_valid)
     );
 
+    /* verilator lint_off PINCONNECTEMPTY */
     uart_fifoed_send inst_uart_send (
         .clk_100MHz (clk),
         .reset      (rst),
@@ -54,7 +55,7 @@ module boot_loader (
         .fifo_afull (),
         .fifo_full  ()
     );
-
+/* verilator lint_on PINCONNECTEMPTY */
     byte_2_word b2w (
         .rst      (rst),
         .clk      (clk),
