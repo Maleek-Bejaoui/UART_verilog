@@ -60,7 +60,7 @@ module boot_loader (
         .clk      (clk),
         .ce       (ce),
         .byte_dv  (rx_data_valid),
-        .byte     (rx_byte),
+        .byteee     (rx_byte),
         .word_dv  (rx_word_valid),
         .word     (rx_word)
     );
@@ -72,7 +72,7 @@ module boot_loader (
         .word_dv  (tx_data_valid),
         .word     (ram_out),
         .byte_dv  (tx_word_valid),
-        .byte     (tx_byte)
+        .byteee     (tx_byte)
     );
 
     //----------------------------------------------------------
