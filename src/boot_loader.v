@@ -69,7 +69,6 @@ module boot_loader (
     word_2_byte w2b (
         .rst      (rst),
         .clk      (clk),
-        .ce       (ce),
         .word_dv  (tx_data_valid),
         .word     (ram_out),
         .byte_dv  (tx_word_valid),
